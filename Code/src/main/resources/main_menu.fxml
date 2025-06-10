@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
+
+<?import javafx.scene.effect.DropShadow?>
+<HBox fx:id="rootHBox"
+      xmlns:fx="http://javafx.com/fxml"
+      fx:controller="application.controller.MenuController"
+      spacing="20"
+      prefWidth="800"
+      prefHeight="800"
+      alignment="CENTER_LEFT">
+
+
+
+
+    <!-- Partie gauche : boutons -->
+    <VBox fx:id="buttonVBox"
+          alignment="CENTER"
+          spacing="50"
+          prefWidth="300"
+          prefHeight="600">
+
+        <HBox alignment="CENTER" spacing="10">
+            <!-- FACILE -->
+            <VBox alignment="CENTER" spacing="5">
+                <ImageView fx:id="easyImageView" fitWidth="60" fitHeight="60" />
+                <RadioButton fx:id="easyRadio" text="Facile" selected="true"/>
+            </VBox>
+
+            <!-- MOYEN -->
+            <VBox alignment="CENTER" spacing="5">
+                <ImageView fx:id="mediumImageView" fitWidth="60" fitHeight="60" />
+                <RadioButton fx:id="mediumRadio" text="Moyen" />
+            </VBox>
+
+            <!-- DIFFICILE -->
+            <VBox alignment="CENTER" spacing="5">
+                <ImageView fx:id="hardImageView" fitWidth="60" fitHeight="60" />
+                <RadioButton fx:id="hardRadio" text="Difficile" />
+            </VBox>
+        </HBox>
+
+
+
+        <Button fx:id="buttonPersonnalisation" style="-fx-background-color: transparent; -fx-padding: 0; -fx-border-color: transparent;">
+            <graphic>
+                <ImageView fitWidth="200" fitHeight="200" preserveRatio="true">
+                    <effect>
+                        <DropShadow radius="10" offsetX="4" offsetY="4" color="black"/>
+                    </effect>
+                    <image>
+                        <Image url="@btn_perso.png"/>
+                    </image>
+                </ImageView>
+            </graphic>
+        </Button>
+
+        <Button fx:id="buttonPlay" style="-fx-background-color: transparent; -fx-padding: 0; -fx-border-color: transparent;">
+            <graphic>
+                <ImageView fitWidth="200" fitHeight="200" preserveRatio="true">
+                    <effect>
+                        <DropShadow radius="10" offsetX="4" offsetY="4" color="black"/>
+                    </effect>
+                    <image>
+                        <Image url="@btn_jouer.png"/>
+                    </image>
+                </ImageView>
+            </graphic>
+        </Button>
+
+        <Button fx:id="buttonRules" style="-fx-background-color: transparent; -fx-padding: 0; -fx-border-color: transparent;">
+            <graphic>
+                <ImageView fitWidth="200" fitHeight="200" preserveRatio="true">
+                    <effect>
+                        <DropShadow radius="10" offsetX="4" offsetY="4" color="black"/>
+                    </effect>
+                    <image>
+                        <Image url="@btn_regles.png"/>
+                    </image>
+                </ImageView>
+            </graphic>
+        </Button>
+
+    </VBox>
+
+    <!-- Partie droite : zone affichage personnage + map -->
+    <VBox fx:id="displayVBox" spacing="40" alignment="CENTER" prefWidth="200" prefHeight="600">
+        <ImageView fx:id="mapView" fitWidth="250" fitHeight="200" preserveRatio="true">
+        <effect>
+            <DropShadow radius="10" offsetX="4" offsetY="4" color="black"/>
+        </effect>
+        </ImageView>
+
+        <ImageView fx:id="characterView" fitWidth="250" fitHeight="350" preserveRatio="true">
+            <effect>
+                <DropShadow radius="10" offsetX="4" offsetY="4" color="black"/>
+            </effect>
+        </ImageView>
+    </VBox>
+
+
+</HBox>

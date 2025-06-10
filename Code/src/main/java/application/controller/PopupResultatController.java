@@ -1,0 +1,58 @@
+package application.controller;
+
+import javafx.fxml.FXML;
+import javafx.scene.control.Button;
+import javafx.scene.control.Label;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
+import javafx.stage.Stage;
+
+public class PopupResultatController {
+
+    @FXML private ImageView imageResultat;
+    @FXML private Label labelMessage;
+    @FXML private Button btnRetour;
+    @FXML private ImageView btnImage;
+
+    private Runnable onClose;
+
+    public void initialize() {
+        // Set default button image
+        Image retourImage = new Image("back_map.png");
+        btnImage.setImage(retourImage);
+
+        // Button scale effect
+        btnRetour.setOnMousePressed(e -> {
+            btnImage.setScaleX(0.95);
+            btnImage.setScaleY(0.95);
+        });
+        btnRetour.setOnMouseReleased(e -> {
+            btnImage.setScaleX(1.0);
+            btnImage.setScaleY(1.0);
+        });
+
+        btnRetour.setOnAction(e -> {
+            if (onClose != null) onClose.run();
+            closeWindow();
+        });
+    }
+
+    public void setOnClose(Runnable onClose) {
+        this.onClose = onClose;
+    }
+
+    public void setResult(boolean victory) {
+        if (victory) {
+            imageResultat.setImage(new Image("victory.png"));
+            labelMessage.setText("Vous avez vaincu le boss !");
+        } else {
+            imageResultat.setImage(new Image("defeat.png"));
+            labelMessage.setText("Vous avez été vaincu par le boss.");
+        }
+    }
+
+    private void closeWindow() {
+        Stage stage = (Stage) btnRetour.getScene().getWindow();
+        stage.close();
+    }
+}

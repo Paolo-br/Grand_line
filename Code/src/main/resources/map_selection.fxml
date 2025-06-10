@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.geometry.*?>
+
+<?import javafx.scene.effect.DropShadow?>
+<VBox spacing="20"
+      alignment="CENTER"
+      xmlns:fx="http://javafx.com/fxml"
+      fx:controller="application.controller.MapSelectionController"
+      prefWidth="800"
+      prefHeight="600">
+
+    <background>
+        <Background>
+            <images>
+                <BackgroundImage>
+                    <image>
+                        <Image url="@fondMap.png" />
+                    </image>
+                    <repeatX>NO_REPEAT</repeatX>
+                    <repeatY>NO_REPEAT</repeatY>
+                    <position>
+                        <BackgroundPosition />
+                    </position>
+                    <size>
+                        <BackgroundSize width="800" height="600" widthAsPercentage="false" heightAsPercentage="false" contain="false" cover="true"/>
+                    </size>
+                </BackgroundImage>
+            </images>
+        </Background>
+    </background>
+
+    <Label text="Choisissez une carte" style="-fx-font-size: 24px;" />
+    <Button fx:id="randomMapButton" text="Aléatoire" prefWidth="150"/>
+
+    <HBox spacing="20" alignment="CENTER">
+        <Button fx:id="leftMapButton" text="◀" prefWidth="50"/>
+        <ImageView fx:id="mapImageView" fitHeight="300" fitWidth="500" preserveRatio="true"/>
+        <Button fx:id="rightMapButton" text="▶" prefWidth="50"/>
+    </HBox>
+
+    <Button fx:id="selectMapButton" style="-fx-background-color: transparent; -fx-padding: 0; -fx-border-color: transparent;">
+        <graphic>
+            <ImageView fitWidth="200" fitHeight="200" preserveRatio="true">
+                <effect>
+                    <DropShadow radius="10" offsetX="4" offsetY="4" color="black"/>
+                </effect>
+                <image>
+                    <Image url="@btn_selec.png"/>
+                </image>
+            </ImageView>
+        </graphic>
+    </Button>
+
+</VBox>

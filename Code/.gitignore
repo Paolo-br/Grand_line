@@ -1,0 +1,12 @@
+# VSCode files
+# .vscode
+.vscode/settings.json
+
+# IntelliJ files
+# .idea
+.mvn
+mvnw
+mvnw.cmd
+
+# Output things ?
+target

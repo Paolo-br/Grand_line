@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.*?>
+
+<VBox xmlns="http://javafx.com/javafx"
+      xmlns:fx="http://javafx.com/fxml"
+      fx:controller="application.controller.PersonnalisationController"
+      alignment="CENTER"
+      spacing="30"
+      prefWidth="600"
+      prefHeight="400">
+
+    <background>
+        <Background>
+            <images>
+                <BackgroundImage>
+                    <image>
+                        <Image url="@fondPersonnalisation.png" />
+                    </image>
+                    <repeatX>NO_REPEAT</repeatX>
+                    <repeatY>NO_REPEAT</repeatY>
+                    <position>
+                        <BackgroundPosition />
+                    </position>
+                    <size>
+                        <BackgroundSize width="800" height="600" widthAsPercentage="false" heightAsPercentage="false" contain="false" cover="true"/>
+                    </size>
+                </BackgroundImage>
+            </images>
+        </Background>
+    </background>
+
+    <Button fx:id="randomButton" text="Aléatoire" prefWidth="150" />
+
+    <!-- Ligne pour la tête -->
+    <BorderPane prefWidth="400" prefHeight="80">
+        <left>
+            <VBox alignment="CENTER" style="-fx-padding: 0 0 0 20;">
+                <Button fx:id="leftHeadButton" text="←" prefWidth="50" prefHeight="50"/>
+            </VBox>
+        </left>
+        <center>
+            <ImageView fx:id="headView" fitHeight="80" preserveRatio="true"/>
+        </center>
+        <right>
+            <VBox alignment="CENTER" style="-fx-padding: 0 20 0 0;">
+                <Button fx:id="rightHeadButton" text="→" prefWidth="50" prefHeight="50"/>
+            </VBox>
+        </right>
+    </BorderPane>
+
+    <!-- Ligne pour le corps avec décalage à gauche -->
+    <BorderPane prefWidth="400" prefHeight="110">
+        <left>
+            <VBox alignment="CENTER" style="-fx-padding: 0 0 0 20;">
+                <Button fx:id="leftBodyButton" text="←" prefWidth="50" prefHeight="50"/>
+            </VBox>
+        </left>
+        <center>
+            <ImageView fx:id="bodyView" fitHeight="120" preserveRatio="true" style="-fx-translate-x: -10;" />
+        </center>
+        <right>
+            <VBox alignment="CENTER" style="-fx-padding: 0 20 0 0;">
+                <Button fx:id="rightBodyButton" text="→" prefWidth="50" prefHeight="50"/>
+            </VBox>
+        </right>
+    </BorderPane>
+
+    <!-- Ligne pour les jambes -->
+    <BorderPane prefWidth="400" prefHeight="250">
+        <left>
+            <VBox alignment="CENTER" style="-fx-padding: 0 0 0 20;">
+                <Button fx:id="leftLegsButton" text="←" prefWidth="50" prefHeight="50"/>
+            </VBox>
+        </left>
+        <center>
+            <ImageView fx:id="legsView" fitHeight="260" preserveRatio="true"/>
+        </center>
+        <right>
+            <VBox alignment="CENTER" style="-fx-padding: 0 20 0 0;">
+                <Button fx:id="rightLegsButton" text="→" prefWidth="50" prefHeight="50"/>
+            </VBox>
+        </right>
+    </BorderPane>
+
+    <Button fx:id="selectButton" text="Sélectionner" style="-fx-font-size: 16px; -fx-padding: 10px 20px;" />
+
+</VBox>
