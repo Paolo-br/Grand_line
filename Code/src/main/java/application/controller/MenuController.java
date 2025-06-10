@@ -91,18 +91,19 @@ public class MenuController {
         Image imageMap = new Image("/" + map);
         mapView.setImage(imageMap);
     }
+
     public int getSelectedDifficulty() {
-        int difficulty;
         RadioButton selected = (RadioButton) difficultyGroup.getSelectedToggle();
-        if (selected.getText()=="Facile"){
-            difficulty=1;
-        } else if (selected.getText()=="Moyen") {
-            difficulty=2;
-        }else{
-            difficulty=3;
-        }
-        return difficulty;
+        String text = selected.getText().toLowerCase();
+        return switch (text) {
+            case "facile" -> 1;
+            case "moyen" -> 2;
+            case "difficile" -> 3;
+            default -> 2; // Par défaut "Moyen"
+        };
     }
+
+
 
 
 
