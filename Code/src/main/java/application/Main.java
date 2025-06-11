@@ -20,7 +20,7 @@ public class Main extends Application {
         scene.getStylesheets().add(getClass().getResource("/style.css").toExternalForm());
 
         primaryStage.show();
-        SoundManager.playBackgroundMusic("/musiqueOnePiece.mp3");
+
     }
 
     public static void main(String[] args) {

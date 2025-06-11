@@ -2,6 +2,7 @@ package application.controller;
 
 import application.model.Boss;
 import application.model.Island;
+import application.model.SoundManager;
 import application.view.BossView;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -29,6 +30,7 @@ public class BossController {
 
     private void initClickListener() {
         bossView.setOnMouseClicked(event -> {
+            SoundManager.playClickSound("/music_boss.mp3", 0.8);
             if (island.isVisible() && !island.getBoss().isVaincu() && gameController != null && gameController.isBoatDockedAtIsland(island)) {
                 showCombatPopup();
             }else if (gameController != null) {

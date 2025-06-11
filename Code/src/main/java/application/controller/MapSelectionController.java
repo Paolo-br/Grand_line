@@ -1,6 +1,7 @@
 package application.controller;
 
 import application.model.GameManager;
+import application.model.SoundManager;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.image.Image;
@@ -26,16 +27,19 @@ public class MapSelectionController {
         updateMap();
 
         leftMapButton.setOnAction(e -> {
+            SoundManager.playClickSound("/clic.mp3", 0.8);
             currentIndex = (currentIndex - 1 + mapImages.length) % mapImages.length;
             updateMap();
         });
 
         rightMapButton.setOnAction(e -> {
+            SoundManager.playClickSound("/clic.mp3", 0.8);
             currentIndex = (currentIndex + 1) % mapImages.length;
             updateMap();
         });
 
         selectMapButton.setOnAction(e -> {
+            SoundManager.playClickSound("/clic.mp3", 0.8);
             //on sauvegarde nos map choisi dans le gameManager
             GameManager.getInstance().setSelectedMapIndex(currentIndex);
 
@@ -45,6 +49,7 @@ public class MapSelectionController {
             ((Stage) selectMapButton.getScene().getWindow()).close();
         });
         randomMapButton.setOnAction(e -> {
+            SoundManager.playClickSound("/clic.mp3", 0.8);
             currentIndex = new Random().nextInt(mapImages.length);
             updateMap();
         });

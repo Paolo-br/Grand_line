@@ -1,5 +1,6 @@
 package application.controller;
 
+import application.model.SoundManager;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.effect.DropShadow;
@@ -67,9 +68,10 @@ public class EndGameController {
             rejouerView.setScaleX(1.0);
             rejouerView.setScaleY(1.0);
         });
-        btnMenu.setOnAction(e -> {gameController.retourMenu();
+        btnMenu.setOnAction(e -> {
+            SoundManager.playClickSound("/clic.mp3", 0.8);gameController.retourMenu();
             Stage stage = (Stage) btnMenu.getScene().getWindow();
             stage.close();});
-        btnRejouer.setOnAction(e -> gameController.rejouerPartie());
+        btnRejouer.setOnAction(e -> {SoundManager.playClickSound("/clic.mp3", 0.8);gameController.rejouerPartie();});
     }
 }

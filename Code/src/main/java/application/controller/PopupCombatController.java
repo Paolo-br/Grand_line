@@ -1,5 +1,6 @@
 package application.controller;
 
+import application.model.SoundManager;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.image.Image;
@@ -48,10 +49,11 @@ public class PopupCombatController {
         });
 
         btnOui.setOnAction(e -> {
+            SoundManager.playClickSound("/clic.mp3", 0.8);
             if (onAccept != null) onAccept.run();
             closeWindow();
         });
-        btnNon.setOnAction(e -> closeWindow());
+        btnNon.setOnAction(e -> {SoundManager.playClickSound("/clic.mp3", 0.8);closeWindow();});
     }
 
     private void closeWindow() {

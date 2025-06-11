@@ -1,5 +1,6 @@
 package application.controller;
 
+import application.model.SoundManager;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -37,9 +38,10 @@ public class ReglesJeuController {
 
         afficherImageCourante();
 
-        btnGauche.setOnAction(e -> afficherImagePrecedente());
-        btnDroite.setOnAction(e -> afficherImageSuivante());
-        btnRetour.setOnAction(e -> retourMenu());
+        btnGauche.setOnAction(e -> {
+            SoundManager.playClickSound("/clic.mp3", 0.8);afficherImagePrecedente();});
+        btnDroite.setOnAction(e -> {SoundManager.playClickSound("/clic.mp3", 0.8);afficherImageSuivante();});
+        btnRetour.setOnAction(e -> {SoundManager.playClickSound("/clic.mp3", 0.8);retourMenu();});
     }
 
     private void afficherImageCourante() {

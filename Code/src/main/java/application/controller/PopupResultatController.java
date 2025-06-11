@@ -1,5 +1,6 @@
 package application.controller;
 
+import application.model.SoundManager;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -32,6 +33,7 @@ public class PopupResultatController {
         });
 
         btnRetour.setOnAction(e -> {
+            SoundManager.playClickSound("/clic.mp3", 0.8);
             if (onClose != null) onClose.run();
             closeWindow();
         });

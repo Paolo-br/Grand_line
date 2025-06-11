@@ -46,6 +46,7 @@ public class MenuController {
 
     @FXML
     public void initialize() {
+        SoundManager.playBackgroundMusic("/musiqueOnePiece.mp3");
         difficultyGroup = new ToggleGroup();
         easyRadio.setToggleGroup(difficultyGroup);
         mediumRadio.setToggleGroup(difficultyGroup);
@@ -95,6 +96,7 @@ public class MenuController {
                 @Override
                 protected void succeeded() {
                     hideLoadingOverlay();
+                    SoundManager.stopBackgroundMusic();
                     MenuView.showPlayWindow();
                     Stage stage = (Stage) buttonPlay.getScene().getWindow();
                     stage.close();

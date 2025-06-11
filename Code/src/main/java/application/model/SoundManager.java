@@ -7,10 +7,11 @@ public class SoundManager {
     private static MediaPlayer backgroundMusic;
 
     public static void playBackgroundMusic(String path) {
+        stopBackgroundMusic();
         Media media = new Media(SoundManager.class.getResource(path).toExternalForm());
         backgroundMusic = new MediaPlayer(media);
         backgroundMusic.setCycleCount(MediaPlayer.INDEFINITE); // boucle
-        backgroundMusic.setVolume(0.5); // volume de 0.0 à 1.0
+        backgroundMusic.setVolume(0.15); // volume de 0.0 à 1.0
         backgroundMusic.play();
     }
 

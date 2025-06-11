@@ -69,6 +69,7 @@ public class CombatController {
         }
     }
     public void setBoss(Boss boss) {
+        SoundManager.playBackgroundMusic("/music_combat.mp3");
         String imagePath = boss.getView();
         forceParClic = 3*gameState.getMultiplicator()/(map.getDifficulte()-0.5);
         labelPvInfo.setText("PV Boss: " + (int)boss.getPV());
@@ -136,6 +137,7 @@ public class CombatController {
         btnFuite.setText("");
         btnFuite.setStyle("-fx-background-color: transparent;");
         btnFuite.setOnMousePressed(e-> {
+            SoundManager.playClickSound("/clic.mp3", 0.8);
             if (!btnFuite.isDisabled()) {
                 fuiteView.setScaleX(0.95);
                 fuiteView.setScaleY(0.95);

@@ -151,6 +151,7 @@ public class BoatController {
                     boatView.setLayoutX(oldX);
                     boatView.setLayoutY(oldY);
 
+                    boatView.setBoatImage("boat_translate.png");
                     TranslateTransition tt = new TranslateTransition(Duration.millis(600), boatView.getImageView());
                     tt.setToX(finalX - oldX);
                     tt.setToY(finalY - oldY);
@@ -165,6 +166,8 @@ public class BoatController {
                         // Remettre à zéro le translate de l’image
                         boatView.getImageView().setTranslateX(0);
                         boatView.getImageView().setTranslateY(0);
+
+                        boatView.setBoatImage("sunny.png");
 
                         // Mettre à jour le modèle
                         boatView.getBoat().setPosition(finalX, finalY);

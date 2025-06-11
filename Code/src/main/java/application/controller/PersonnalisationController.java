@@ -3,6 +3,7 @@ package application.controller;
 import application.model.CharacterModel;
 import application.model.CharacterSelection;
 import application.model.GameManager;
+import application.model.SoundManager;
 import application.view.MenuView;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -35,34 +36,41 @@ public class PersonnalisationController {
         updateImages();
 
         leftHeadButton.setOnAction(e -> {
+            SoundManager.playClickSound("/clic.mp3", 0.8);
             model.prevHead();
             updateImages();
         });
 
         rightHeadButton.setOnAction(e -> {
+            SoundManager.playClickSound("/clic.mp3", 0.8);
             model.nextHead();
             updateImages();
         });
 
         leftBodyButton.setOnAction(e -> {
+            SoundManager.playClickSound("/clic.mp3", 0.8);
             model.prevBody();
             updateImages();
         });
 
         rightBodyButton.setOnAction(e -> {
+            SoundManager.playClickSound("/clic.mp3", 0.8);
             model.nextBody();
             updateImages();
         });
 
         leftLegsButton.setOnAction(e -> {
+            SoundManager.playClickSound("/clic.mp3", 0.8);
             model.prevLegs();
             updateImages();
         });
         rightLegsButton.setOnAction(e -> {
+            SoundManager.playClickSound("/clic.mp3", 0.8);
             model.nextLegs();
             updateImages();
         });
         selectButton.setOnAction(e -> {
+            SoundManager.playClickSound("/clic.mp3", 0.8);
             // 1. Sauvegarder le skin sélectionné
             GameManager.getInstance().setSelectedCharacter(model.getCurrentSelection());
 
@@ -78,6 +86,7 @@ public class PersonnalisationController {
             application.view.MenuView.showMapSelectionWindow(menuController); // à adapter à ton système de vue
         });
         randomButton.setOnAction(e -> {
+            SoundManager.playClickSound("/clic.mp3", 0.8);
             model.randomize();
             updateImages();
         });

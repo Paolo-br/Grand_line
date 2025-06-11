@@ -29,6 +29,7 @@ public class GameController {
     @FXML private Label multiplicatorValueLabel;
     @FXML private Label toastLabel;
     @FXML private Button btnQuitter;
+    @FXML private ImageView waveOverlay;
 
 
     private Boat boat;
@@ -87,9 +88,11 @@ public class GameController {
 
     @FXML
     public void initialize() {
+
         map = new GameMap(GameManager.getInstance().getSelectedDifficulty(), this); // exemple difficulté 1
         afficherIles(map.getIles());
         cartePane.getChildren().add(toastLabel);
+
 
 
         // Initialiser le bateau
@@ -127,6 +130,7 @@ public class GameController {
         });
 
         btnQuitter.setOnAction(e -> {
+            SoundManager.playClickSound("/clic.mp3", 0.8);
             quitterPartie();
             Stage stage = (Stage) btnQuitter.getScene().getWindow();
             stage.close();
@@ -146,6 +150,7 @@ public class GameController {
             quitterView.setScaleX(1.0);
             quitterView.setScaleY(1.0);
         });
+       SoundManager.playBackgroundMusic("/music_map.mp3");
     }
 
     public void lancerCombat(Boss boss) {
@@ -169,6 +174,7 @@ public class GameController {
     }
 
     public void quitterPartie() {
+        SoundManager.stopBackgroundMusic();
         try {
             FXMLLoader loader = new FXMLLoader(MenuView.class.getResource("/main_menu.fxml")); // adapte le chemin
             Parent root = loader.load();
@@ -183,7 +189,8 @@ public class GameController {
 
 
     public void quitterCombat() {
-
+        SoundManager.stopBackgroundMusic();
+        SoundManager.playBackgroundMusic("/music_map.mp3");
         // Enlève le dernier enfant ajouté (la vue de combat)
         if (!cartePane.getChildren().isEmpty()) {
             Node last = cartePane.getChildren().get(cartePane.getChildren().size() - 1);
