@@ -7,6 +7,8 @@ import application.model.SoundManager;
 import application.view.MenuView;
 import javafx.concurrent.Task;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ProgressIndicator;
 import javafx.scene.control.RadioButton;
@@ -18,6 +20,7 @@ import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
 
 
+import java.io.IOException;
 import java.io.InputStream;
 
 public class MenuController {
@@ -102,8 +105,18 @@ public class MenuController {
         });
 
         buttonRules.setOnAction(e -> {
-            MenuView.showRulesWindow();
             SoundManager.playClickSound("/clic.mp3", 0.8);
+            try {
+                FXMLLoader loader = new FXMLLoader(getClass().getResource("/ReglesJeu.fxml"));
+                Scene scene = new Scene(loader.load());
+
+                Stage currentStage = (Stage) buttonRules.getScene().getWindow();
+                currentStage.setScene(scene); // remplace la scène actuelle
+                currentStage.show();
+
+            } catch (IOException ex) {
+                ex.printStackTrace();
+            }
         });
         updateImages();
         updateMap(GameManager.getInstance().getSelectedMapImageName());
