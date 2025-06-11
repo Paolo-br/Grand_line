@@ -7,7 +7,7 @@ import javafx.beans.property.SimpleIntegerProperty;
 
 public class GameState {
     private final IntegerProperty level = new SimpleIntegerProperty(1);
-    private final IntegerProperty lives = new SimpleIntegerProperty(1);
+    private final IntegerProperty lives = new SimpleIntegerProperty(5);
     private final DoubleProperty multiplicator = new SimpleDoubleProperty(1);
 
     public int getLevel() {

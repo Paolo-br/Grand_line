@@ -54,7 +54,7 @@
                         <DropShadow color="black" radius="2.0" offsetX="1.0" offsetY="1.0"/>
                      </effect>
                   </Label>
-                  <HBox fx:id="heartsBox" alignment="CENTER_LEFT" prefHeight="53.0" prefWidth="202.0" spacing="5.0"
+                  <HBox fx:id="heartsBox" alignment="CENTER" prefHeight="53.0" prefWidth="202.0" spacing="5.0"
                         style="-fx-background-color: rgba(255, 255, 255, 0.5);
                                -fx-background-radius: 10;
                                -fx-padding: 8;"/>

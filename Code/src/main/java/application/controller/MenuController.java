@@ -5,12 +5,16 @@ import application.model.CharacterSelection;
 import application.model.GameManager;
 import application.model.SoundManager;
 import application.view.MenuView;
+import javafx.concurrent.Task;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
+import javafx.scene.control.ProgressIndicator;
 import javafx.scene.control.RadioButton;
 import javafx.scene.control.ToggleGroup;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.layout.Pane;
+import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
 
 
@@ -18,16 +22,23 @@ import java.io.InputStream;
 
 public class MenuController {
 
-    public ImageView easyImageView,mediumImageView,hardImageView;
+    public ImageView easyImageView, mediumImageView, hardImageView;
 
-    @FXML private ImageView characterView,mapView; //Personnalisation
+    @FXML
+    private ImageView characterView, mapView; //Personnalisation
     private CharacterModel model;
 
-    @FXML private Button buttonPersonnalisation, buttonPlay, buttonRules;
-    @FXML private RadioButton easyRadio;
-    @FXML private RadioButton mediumRadio;
-    @FXML private RadioButton hardRadio;
-    @FXML private ToggleGroup difficultyGroup;
+    @FXML
+    private Button buttonPersonnalisation, buttonPlay, buttonRules;
+    @FXML
+    private RadioButton easyRadio;
+    @FXML
+    private RadioButton mediumRadio;
+    @FXML
+    private RadioButton hardRadio;
+    @FXML
+    private ToggleGroup difficultyGroup;
+    private StackPane loadingOverlay;
 
 
     @FXML
@@ -61,16 +72,35 @@ public class MenuController {
             MenuView.showPersonnalisationWindow(this);
             SoundManager.playClickSound("/clic.mp3", 0.8);
         });
+
         buttonPlay.setOnAction(e -> {
             int selectedDifficulty = getSelectedDifficulty();
             GameManager.getInstance().setSelectedDifficulty(selectedDifficulty);
-            System.out.println(GameManager.getInstance().getSelectedDifficulty());
-
             SoundManager.playClickSound("/clic.mp3", 0.8);
-            MenuView.showPlayWindow();
-            Stage stage = (Stage) buttonPlay.getScene().getWindow();
-            stage.close();
+
+            showLoadingOverlay(); // Affiche le loading
+
+            // Lancer le chargement en arrière-plan
+            Task<Void> loadGameTask = new Task<>() {
+                @Override
+                protected Void call() throws Exception {
+                    // Simule le chargement (à remplacer par ta logique réelle)
+                    Thread.sleep(1000);
+                    return null;
+                }
+
+                @Override
+                protected void succeeded() {
+                    hideLoadingOverlay();
+                    MenuView.showPlayWindow();
+                    Stage stage = (Stage) buttonPlay.getScene().getWindow();
+                    stage.close();
+                }
+            };
+
+            new Thread(loadGameTask).start();
         });
+
         buttonRules.setOnAction(e -> {
             MenuView.showRulesWindow();
             SoundManager.playClickSound("/clic.mp3", 0.8);
@@ -78,6 +108,7 @@ public class MenuController {
         updateImages();
         updateMap(GameManager.getInstance().getSelectedMapImageName());
     }
+
     public void updateImages() {
         CharacterSelection character = GameManager.getInstance().getSelectedCharacter();
         if (character != null) {
@@ -87,7 +118,8 @@ public class MenuController {
             characterView.setImage(characterImage);
         }
     }
-    public void updateMap(String map){
+
+    public void updateMap(String map) {
         Image imageMap = new Image("/" + map);
         mapView.setImage(imageMap);
     }
@@ -103,8 +135,29 @@ public class MenuController {
         };
     }
 
+    private void showLoadingOverlay() {
+        if (loadingOverlay == null) {
+            loadingOverlay = new StackPane();
+            loadingOverlay.setStyle("-fx-background-color: rgba(0,0,0,0.5);");
 
+            ProgressIndicator spinner = new ProgressIndicator();
+            spinner.setMaxSize(100, 100);
+            spinner.setProgress(ProgressIndicator.INDETERMINATE_PROGRESS);
 
+            loadingOverlay.getChildren().add(spinner);
+            // Ajoute au root de ta scène
+            Pane root =(Pane) buttonPlay.getScene().getRoot();
+            loadingOverlay.prefWidthProperty().bind(root.prefWidthProperty());
+            loadingOverlay.prefHeightProperty().bind(root.prefHeightProperty());
+            root.getChildren().add(loadingOverlay);
+        }
+        loadingOverlay.toFront();
+        loadingOverlay.setVisible(true);
+    }
 
-
+    private void hideLoadingOverlay() {
+        if (loadingOverlay != null) {
+            loadingOverlay.setVisible(false);
+        }
+    }
 }
