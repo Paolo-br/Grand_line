@@ -276,7 +276,7 @@ public class GameController {
             System.out.println("Nouvelle Partie créée");
 
             // 1. Réinitialiser GameState
-            gameState.setLives(9);
+            gameState.setLives(5);
             gameState.setLevel(1);
             gameState.setMultiplicator(1);
 
