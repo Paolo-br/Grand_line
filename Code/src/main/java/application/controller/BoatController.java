@@ -152,7 +152,7 @@ public class BoatController {
                     boatView.setLayoutY(oldY);
 
                     boatView.setBoatImage("boat_translate.png");
-                    TranslateTransition tt = new TranslateTransition(Duration.millis(600), boatView.getImageView());
+                    TranslateTransition tt = new TranslateTransition(Duration.millis(900), boatView.getImageView());
                     tt.setToX(finalX - oldX);
                     tt.setToY(finalY - oldY);
 
