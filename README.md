@@ -24,12 +24,7 @@ Grand Line est un jeu d’exploration et de navigation inspiré de l’univers d
 
 - 📜 Écran de règles illustrées
 
-```
-cd existing_repo
-git remote add origin https://gitlab.dsi.universite-paris-saclay.fr/projet-java-graphique-ihm/groups-2025/group-13.git
-git branch -M main
-git push -uf origin main
-```
+
 
 ## Univers et inspiration
 
