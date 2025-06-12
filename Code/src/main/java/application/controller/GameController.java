@@ -89,6 +89,21 @@ public class GameController {
     @FXML
     public void initialize() {
 
+        int mapImageName = GameManager.getInstance().getSelectedMapIndex()+1;
+        System.out.println(mapImageName);
+
+        // Créer un BackgroundImage
+        BackgroundImage backgroundImage = new BackgroundImage(
+                new Image("/map"+mapImageName+".png"),
+                BackgroundRepeat.NO_REPEAT,
+                BackgroundRepeat.NO_REPEAT,
+                BackgroundPosition.DEFAULT,
+                new BackgroundSize(BackgroundSize.AUTO, BackgroundSize.AUTO, false, false, true, true)
+        );
+
+        // Appliquer en fond
+        cartePane.setBackground(new Background(backgroundImage));
+
         map = new GameMap(GameManager.getInstance().getSelectedDifficulty(), this); // exemple difficulté 1
         afficherIles(map.getIles());
         cartePane.getChildren().add(toastLabel);

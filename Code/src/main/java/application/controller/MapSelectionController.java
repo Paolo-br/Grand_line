@@ -14,7 +14,7 @@ public class MapSelectionController {
     @FXML private ImageView mapImageView;
     @FXML private Button leftMapButton, rightMapButton, selectMapButton,randomMapButton;
 
-    private final String[] mapImages = { "map1.png", "map2.png", "map3.png" };
+    private final String[] mapImages = { "map1.png", "map2.png", "map3.png","map4.png","map5.png" };
     private int currentIndex = 0;
     private MenuController menuController;
 

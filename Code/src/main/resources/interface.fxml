@@ -10,14 +10,11 @@
 
 <?import javafx.scene.effect.DropShadow?>
 <?import javafx.scene.control.Button?>
-<AnchorPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="1200.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.controller.GameController"
-            style="-fx-background-image: url('/carte.jpg');
-             -fx-background-size: cover;
-             -fx-background-repeat: no-repeat;">
+<AnchorPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="1200.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.controller.GameController">
    <children>
       <HBox prefHeight="100.0" prefWidth="200.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <children>
-            <Pane fx:id="cartePane" prefHeight="800.0" prefWidth="960.0" style="-fx-background-image: url('/carte.jpg');-fx-background-size: cover;-fx-background-repeat: no-repeat;">
+            <Pane fx:id="cartePane" prefHeight="800.0" prefWidth="960.0">
                <children>
                   <Label fx:id="toastLabel"
                         text=""

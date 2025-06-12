@@ -29,7 +29,7 @@ public class MenuView {
             controller.setControleurB(menuController);
             Stage stage = new Stage();
             stage.setTitle("Personnalisation du personnage");
-            stage.setScene(new Scene(root,400,700));
+            stage.setScene(new Scene(root, 400, 700));
             stage.show();
         } catch (IOException e) {
             e.printStackTrace();
@@ -52,15 +52,6 @@ public class MenuView {
 
     }
 
-    public static void showRulesWindow() {
-        Stage window = new Stage();
-        ImageView imageView = createImageView("regle.png", 500);
-        VBox layout = new VBox(imageView);
-        layout.setAlignment(Pos.CENTER);
-        window.setScene(new Scene(layout, 1100, 500));
-        window.setTitle("Règles");
-        window.show();
-    }
     public static void showMapSelectionWindow(MenuController menuController) {
         try {
             FXMLLoader loader = new FXMLLoader(MenuView.class.getResource("/map_selection.fxml"));
@@ -75,11 +66,5 @@ public class MenuView {
             e.printStackTrace();
         }
     }
-
-    private static ImageView createImageView(String path, double height) {
-        ImageView imageView = new ImageView(new Image(path));
-        imageView.setFitHeight(height);
-        imageView.setPreserveRatio(true);
-        return imageView;
-    }
 }
+
