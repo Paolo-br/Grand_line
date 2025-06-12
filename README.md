@@ -38,20 +38,20 @@ Ce projet est librement inspiré de One Piece, le manga culte d’Eiichiro Oda. 
 
 ## Structure du Git
 
-📦 Grand_line/
-├── 📁 Code/
-│   ├── 📁 src/main/        # Contrôleurs JavaFX (logique de navigation, règles, résultats)
-│       ├── 📁 java/
-│            ├── 📁 application/ 
-│            │   ├── 📁 controller/        # Contrôleurs JavaFX (logique de navigation, règles, résultats)
-│            │   ├── 📁 model/             # Modèles métier (Boat, Map, GameState, Boss, etc.)
-│            │   ├── 📁 view/              # Vues et composants graphiques personnalisés (BoatView, BossView...)
-│            │   └── Main.java      
-│            └── module-info.java                
-│       ├── 📁 ressources/             
-│        
-
-
+...
+  📦 Grand_line/
+  ├── 📁 Code/
+  │   ├── 📁 src/main/        # Contrôleurs JavaFX (logique de navigation, règles, résultats)
+  │       ├── 📁 java/
+  │            ├── 📁 application/ 
+  │            │   ├── 📁 controller/        # Contrôleurs JavaFX (logique de navigation, règles, résultats)
+  │            │   ├── 📁 model/             # Modèles métier (Boat, Map, GameState, Boss, etc.)
+  │            │   ├── 📁 view/              # Vues et composants graphiques personnalisés (BoatView, BossView...)
+  │            │   └── Main.java      
+  │            └── module-info.java                
+  │       ├── 📁 ressources/             
+  │        
+...
 
 ##  Licence
 
