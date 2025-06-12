@@ -7,6 +7,11 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.stage.Stage;
 
+/**
+ * Contrôleur pour la fenêtre popup de confirmation de combat.
+ * Ce popup demande à l'utilisateur s'il souhaite engager le combat contre un boss,
+ * avec les boutons "Oui" et "Non" et l'affichage de l'image du boss concerné.
+ */
 public class PopupCombatController {
 
     @FXML private Button btnOui;
@@ -15,6 +20,11 @@ public class PopupCombatController {
 
     private Runnable onAccept;
 
+    /**
+     * Initialisation du contrôleur : configure les boutons "Oui" et "Non"
+     * avec leurs images, styles et animations de clic.
+     * Configure aussi les actions associées aux boutons.
+     */
     public void initialize() {
         Image imOui = new Image("oui.png");
         ImageView ouiView = new ImageView(imOui);
@@ -56,15 +66,29 @@ public class PopupCombatController {
         btnNon.setOnAction(e -> {SoundManager.playClickSound("/clic.mp3", 0.8);closeWindow();});
     }
 
+
+    /**
+     * Ferme la fenêtre popup en récupérant la fenêtre actuelle depuis un des boutons.
+     */
     private void closeWindow() {
         Stage stage = (Stage) btnOui.getScene().getWindow();
         stage.close();
     }
 
+    /**
+     * Définit l'action à exécuter lorsque l'utilisateur accepte le combat (bouton Oui).
+     *
+     * @param onAccept Runnable représentant l'action à exécuter
+     */
     public void setOnAccept(Runnable onAccept) {
         this.onAccept = onAccept;
     }
 
+    /**
+     * Définit l'image du boss à afficher dans le popup.
+     *
+     * @param imagePath Chemin relatif ou absolu vers l'image du boss
+     */
     public void setBossImage(String imagePath) {
         bossImage.setImage(new javafx.scene.image.Image(imagePath));
     }

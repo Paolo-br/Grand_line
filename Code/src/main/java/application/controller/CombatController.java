@@ -6,7 +6,6 @@ import javafx.animation.Timeline;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
-import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ProgressBar;
@@ -20,7 +19,19 @@ import javafx.application.Platform;
 
 import java.io.IOException;
 
-
+/**
+ * Contrôleur gérant l'interface et la logique du combat entre le joueur et un boss.
+ *
+ * Ce contrôleur :
+ * - Affiche les images du joueur et du boss,
+ * - Gère la barre de vie du boss,
+ * - Gère les interactions utilisateur (attaque, fuite),
+ * - Contrôle la durée du combat avec un timer,
+ * - Déclenche les événements de victoire ou défaite,
+ * - Communique avec le GameController et GameState pour la progression du jeu.
+ *
+ * Il adapte la difficulté et la force d'attaque selon le niveau et la difficulté de la carte.
+ */
 public class CombatController {
 
     @FXML private Button btnFuite;
@@ -46,17 +57,30 @@ public class CombatController {
     private ImageView fuiteView;
 
 
-
+    /**
+     * Définit l'état du jeu pour accéder aux informations de progression et multiplicateurs.
+     *
+     * @param gameState L'état actuel du jeu.
+     */
     public void setGameState(GameState gameState) {
         this.gameState = gameState;
     }
 
-
+    /**
+     * Initialise la référence vers le contrôleur de jeu et la carte pour accéder à la difficulté.
+     *
+     * @param gameController Le contrôleur principal du jeu.
+     * @param map La carte de jeu actuelle.
+     */
     public void setGameController(GameController gameController,GameMap map) {
         this.map = map;
         this.gameController = gameController;
     }
 
+    /**
+     * Action déclenchée lors du clic sur le bouton fuite.
+     * Arrête le combat, réinitialise les PV du boss et notifie le GameController.
+     */
     @FXML
     private void handleFuite() {
         if (timeline != null) {
@@ -68,6 +92,13 @@ public class CombatController {
             gameController.quitterCombat();
         }
     }
+
+    /**
+     * Initialise l'interface du combat avec le boss donné.
+     * Configure les images, la force d'attaque, les effets visuels et les timers.
+     *
+     * @param boss Le boss contre lequel le joueur combat.
+     */
     public void setBoss(Boss boss) {
         SoundManager.playBackgroundMusic("/music_combat.mp3");
         String imagePath = boss.getView();
@@ -87,7 +118,6 @@ public class CombatController {
         imJoueur.setEffect(whiteShadow);
 
         // Initialiser la barre de vie (ProgressBar)
-        // On suppose que les PV max = PV au début
         barrePvBoss.setProgress(1.0); // 100%
 
         btnAttaque.setOnAction(e -> {
@@ -95,9 +125,6 @@ public class CombatController {
             if (timeline == null) {
                 startCombat();
             }
-
-            // Attaque
-
 
             double pvRestants = boss.getPV() - forceParClic;
             boss.setPV(Math.max(0, (float)pvRestants));
@@ -155,11 +182,21 @@ public class CombatController {
 
     }
 
+    /**
+     * Met à jour la barre de vie du boss selon ses PV actuels.
+     *
+     * @param boss Le boss dont on met à jour la barre de vie.
+     * @param maxPV Les points de vie maximum du boss.
+     */
     public void updateBossPV(Boss boss, float maxPV) {
         float progress = boss.getPV() / maxPV;
         barrePvBoss.setProgress(progress);
     }
 
+    /**
+     * Démarre le timer principal du combat et le timer de désactivation du bouton fuite.
+     * Le combat dure moins longtemps selon la difficulté de la carte.
+     */
     private void startCombat() {
         dureeCombat = 35 - map.getDifficulte() * 5;
         this.tempsRestant = dureeCombat;
@@ -191,19 +228,17 @@ public class CombatController {
     }
 
 
-
+    /**
+     * Gestion de la victoire du joueur.
+     * Met à jour le statut du boss, le niveau et multiplicateur du joueur,
+     * et affiche une fenêtre popup de résultat.
+     */
     private void victoire() {
         if (timeline != null) timeline.stop();
         boss.setVaincu(true);
 
         String nomBoss = boss.getNom();
         double bonus = 0.0;
-
-        if ("Mihawk".equalsIgnoreCase(nomBoss) ||
-                "Teach".equalsIgnoreCase(nomBoss) ||
-                "Poisson".equalsIgnoreCase(nomBoss)) {
-            bonus += 0.3;
-        }
 
         gameState.setLevel(gameState.getLevel() + 1);
         gameState.setMultiplicator(1 + gameState.getLevel() / 10.0 + bonus);
@@ -237,7 +272,11 @@ public class CombatController {
 
 
 
-
+    /**
+     * Gestion de la défaite du joueur.
+     * Diminue le nombre de vies, vérifie la défaite finale,
+     * et affiche une fenêtre popup de résultat.
+     */
     private void defaite() {
         if (timeline != null) timeline.stop();
         gameState.setLives(gameState.getLives() - 1);
@@ -270,6 +309,11 @@ public class CombatController {
     }
 
 
+    /**
+     * Vérifie si le joueur a vaincu le boss final (One Piece).
+     *
+     * @return true si le boss final est vaincu, false sinon.
+     */
     private boolean checkVictoireFinale() {
         for (Island ile : map.getIles()) {
             if (ile.isOnePiece() && ile.getBoss() != null) {
@@ -277,6 +321,15 @@ public class CombatController {
             }
         }
         return false;
+    }
+
+    /**
+     * Accesseur du timer principal du combat.
+     *
+     * @return la Timeline représentant le timer principal.
+     */
+    public Timeline getTimeline() {
+        return timeline;
     }
 
 

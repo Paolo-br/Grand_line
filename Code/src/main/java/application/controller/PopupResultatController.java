@@ -8,6 +8,10 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.stage.Stage;
 
+/**
+ * Contrôleur pour la fenêtre popup affichant le résultat d'un combat (victoire ou défaite).
+ * Affiche une image et un message adaptés au résultat, ainsi qu'un bouton de retour.
+ */
 public class PopupResultatController {
 
     @FXML private ImageView imageResultat;
@@ -17,6 +21,11 @@ public class PopupResultatController {
 
     private Runnable onClose;
 
+    /**
+     * Initialisation du contrôleur.
+     * Configure l'image du bouton retour, ainsi que les effets visuels et
+     * l'action déclenchée lors du clic sur ce bouton.
+     */
     public void initialize() {
         // Set default button image
         Image retourImage = new Image("back_map.png");
@@ -39,10 +48,20 @@ public class PopupResultatController {
         });
     }
 
+    /**
+     * Définit l'action à exécuter lors de la fermeture de la popup.
+     *
+     * @param onClose Runnable représentant l'action à exécuter
+     */
     public void setOnClose(Runnable onClose) {
         this.onClose = onClose;
     }
 
+    /**
+     * Met à jour l'affichage du résultat en fonction du succès ou de l'échec.
+     *
+     * @param victory true si victoire, false si défaite
+     */
     public void setResult(boolean victory) {
         if (victory) {
             imageResultat.setImage(new Image("victory.png"));
@@ -53,6 +72,9 @@ public class PopupResultatController {
         }
     }
 
+    /**
+     * Ferme la fenêtre popup.
+     */
     private void closeWindow() {
         Stage stage = (Stage) btnRetour.getScene().getWindow();
         stage.close();

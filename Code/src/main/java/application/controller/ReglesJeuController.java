@@ -13,6 +13,11 @@ import javafx.scene.Scene;
 import java.io.IOException;
 import java.util.List;
 
+/**
+ * Contrôleur de la fenêtre affichant les règles du jeu.
+ * Permet de naviguer entre plusieurs images explicatives avec des boutons "gauche" et "droite",
+ * et de revenir au menu principal via un bouton "retour".
+ */
 public class ReglesJeuController {
 
     @FXML private Button btnRetour;
@@ -30,6 +35,10 @@ public class ReglesJeuController {
 
     private int indexImage = 0;
 
+    /**
+     * Initialisation du contrôleur.
+     * Configure les boutons avec leurs images, lie les actions aux clics et affiche la première image.
+     */
     @FXML
     private void initialize() {
         setupBouton(btnRetour, "/retour_menu.png");
@@ -44,6 +53,10 @@ public class ReglesJeuController {
         btnRetour.setOnAction(e -> {SoundManager.playClickSound("/clic.mp3", 0.8);retourMenu();});
     }
 
+    /**
+     * Affiche l'image correspondant à l'index courant dans l'ImageView principale.
+     * Affiche un message d'erreur si l'image n'est pas trouvée.
+     */
     private void afficherImageCourante() {
         var url = getClass().getResource(images.get(indexImage));
         if (url == null) {
@@ -55,6 +68,9 @@ public class ReglesJeuController {
     }
 
 
+    /**
+     * Affiche l'image suivante si possible (index inférieur à la taille de la liste).
+     */
     private void afficherImageSuivante() {
         if (indexImage < images.size() - 1) {
             indexImage++;
@@ -62,6 +78,9 @@ public class ReglesJeuController {
         }
     }
 
+    /**
+     * Affiche l'image précédente si possible (index supérieur à 0).
+     */
     private void afficherImagePrecedente() {
         if (indexImage > 0) {
             indexImage--;
@@ -69,6 +88,12 @@ public class ReglesJeuController {
         }
     }
 
+    /**
+     * Configure un bouton avec une image et des effets visuels au clic.
+     *
+     * @param button Le bouton à configurer
+     * @param imageNormal Le chemin de l'image à charger pour le bouton
+     */
     private void setupBouton(Button button, String imageNormal) {
         if (imageNormal != null) {
             var url = getClass().getResource(imageNormal); // <-- chercher l'image dans le classpath
@@ -96,6 +121,9 @@ public class ReglesJeuController {
         }
     }
 
+    /**
+     * Ferme la fenêtre actuelle et ouvre le menu principal.
+     */
     private void retourMenu() {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/main_menu.fxml"));

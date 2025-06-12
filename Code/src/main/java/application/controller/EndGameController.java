@@ -17,10 +17,20 @@ public class EndGameController {
 
     private GameController gameController;
 
+    /**
+     * Associe le contrôleur principal du jeu à ce contrôleur.
+     * @param controller Instance du GameController
+     */
     public void setGameController(GameController controller) {
         this.gameController = controller;
     }
 
+
+    /**
+     * Affiche l'image correspondant au résultat du jeu (victoire ou défaite).
+     * Applique également un effet d'ombre blanche autour de l'image.
+     * @param victoire true si victoire, false sinon
+     */
     public void afficherResultat(boolean victoire) {
         String imagePath = victoire ? "/victoire.png" : "/defaite.png";
         System.out.println(imagePath);
@@ -34,6 +44,10 @@ public class EndGameController {
         imgResultat.setEffect(whiteShadow);
     }
 
+    /**
+     * Initialisation automatique après le chargement du FXML.
+     * Configure l'apparence et les comportements des boutons Menu et Rejouer.
+     */
     @FXML
     private void initialize() {
         Image imgMenu = new Image("btn_menu.png");

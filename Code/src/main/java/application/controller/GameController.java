@@ -21,6 +21,12 @@ import javafx.util.Duration;
 import java.io.IOException;
 import java.util.*;
 
+/**
+ * Contrôleur principal du jeu.
+ * Gère l'affichage de la carte, le bateau, les combats, les interactions utilisateur,
+ * ainsi que la gestion de l'état du jeu (vies, niveau, multiplicateur).
+ */
+
 public class GameController {
 
     @FXML private Pane cartePane;
@@ -29,7 +35,6 @@ public class GameController {
     @FXML private Label multiplicatorValueLabel;
     @FXML private Label toastLabel;
     @FXML private Button btnQuitter;
-    @FXML private ImageView waveOverlay;
 
 
     private Boat boat;
@@ -38,15 +43,24 @@ public class GameController {
     private GameMap map;
     private final GameState gameState = new GameState();
     private Boss currentBossCombat;
+    private CombatController currentFight;
 
 
-    public void afficherIles(List<Island> iles) {
+    /**
+     * Affiche toutes les îles sur la carte.
+     */
+    public void afficherIles() {
         cartePane.getChildren().clear();
         for (IslandView vue : map.getIslandViews()) {
             cartePane.getChildren().add(vue);
         }
     }
 
+    /**
+     * Met à jour l'affichage des vies sous forme de coeurs dans la barre de vies.
+     *
+     * @param lives Nombre de vies à afficher.
+     */
     private void updateHearts(int lives) {
         heartsBox.getChildren().clear();
         for (int i = 0; i < lives; i++) {
@@ -60,7 +74,11 @@ public class GameController {
         }
     }
 
+    /**
+     * Active la possibilité de déposer le bateau sur la carte via drag & drop.
+     */
     private void enableCarteDrop() {
+        // Gestion du drag over : on accepte uniquement le drag provenant du bateau
         cartePane.setOnDragOver(event -> {
             if (event.getGestureSource() instanceof BoatView &&
                     event.getDragboard().hasString() &&
@@ -70,6 +88,7 @@ public class GameController {
             event.consume();
         });
 
+        // Gestion du drop : positionne le bateau sur la position déposée
         cartePane.setOnDragDropped(event -> {
             double x = event.getX() - boatView.getWidth() / 2;
             double y = event.getY() - boatView.getHeight() / 2;
@@ -85,14 +104,17 @@ public class GameController {
         });
     }
 
-
+    /**
+     * Initialisation du contrôleur (appelée automatiquement après chargement FXML).
+     * Configure la carte, le bateau, les boutons et les liaisons avec l'état du jeu.
+     */
     @FXML
     public void initialize() {
 
         int mapImageName = GameManager.getInstance().getSelectedMapIndex()+1;
         System.out.println(mapImageName);
 
-        // Créer un BackgroundImage
+        // Création et application du fond de carte avec l'image correspondant à la sélection
         BackgroundImage backgroundImage = new BackgroundImage(
                 new Image("/map"+mapImageName+".png"),
                 BackgroundRepeat.NO_REPEAT,
@@ -104,11 +126,10 @@ public class GameController {
         // Appliquer en fond
         cartePane.setBackground(new Background(backgroundImage));
 
+        // Initialisation de la carte du jeu selon la difficulté sélectionnée
         map = new GameMap(GameManager.getInstance().getSelectedDifficulty(), this); // exemple difficulté 1
-        afficherIles(map.getIles());
+        afficherIles();
         cartePane.getChildren().add(toastLabel);
-
-
 
         // Initialiser le bateau
         boat=new Boat(new Position(53,346));
@@ -118,11 +139,12 @@ public class GameController {
         // Contrôleur
         boatController = new BoatController(boatView, map);
         enableCarteDrop();
+        // Ajout des vues des boss sur la carte
         for (BossView bossView : map.getBossViews()) {
             cartePane.getChildren().add(bossView);
         }
 
-
+        // Initialisation de l'affichage des vies et mise à jour automatique au changement
         updateHearts(gameState.getLives());
         gameState.livesProperty().addListener((obs, oldVal, newVal) -> {
             updateHearts(newVal.intValue());
@@ -136,13 +158,6 @@ public class GameController {
         multiplicatorValueLabel.textProperty().bind(
                 Bindings.format("x%.1f", gameState.multiplicatorProperty())
         );
-
-
-        // Affichage des coeurs
-        updateHearts(gameState.getLives());
-        gameState.livesProperty().addListener((obs, oldVal, newVal) -> {
-            updateHearts(newVal.intValue());
-        });
 
         btnQuitter.setOnAction(e -> {
             SoundManager.playClickSound("/clic.mp3", 0.8);
@@ -168,6 +183,12 @@ public class GameController {
        SoundManager.playBackgroundMusic("/music_map.mp3");
     }
 
+    /**
+     * Lance un combat contre un boss donné.
+     * Charge la vue du combat et initialise son contrôleur.
+     *
+     * @param boss Boss contre lequel lancer le combat.
+     */
     public void lancerCombat(Boss boss) {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/CombatView.fxml"));
@@ -179,6 +200,7 @@ public class GameController {
             combatController.setGameState(gameState);
             combatController.setBoss(boss);
             this.currentBossCombat = boss;
+            this.currentFight = combatController;
 
             // Ajouter la vue combat par-dessus la carte
             cartePane.getChildren().add(combatRoot);
@@ -188,7 +210,15 @@ public class GameController {
         }
     }
 
+    /**
+     * Quitte la partie en cours.
+     * Stoppe le combat si en cours et revient au menu principal.
+     */
     public void quitterPartie() {
+        if (currentFight != null && currentFight.getTimeline() != null) {
+            currentFight.getTimeline().stop();
+        }
+
         SoundManager.stopBackgroundMusic();
         try {
             FXMLLoader loader = new FXMLLoader(MenuView.class.getResource("/main_menu.fxml")); // adapte le chemin
@@ -202,7 +232,10 @@ public class GameController {
         }
     }
 
-
+    /**
+     * Quitte l'écran de combat et retourne à la carte.
+     * Met à jour la visibilité des îles et affiche un drapeau de victoire si besoin.
+     */
     public void quitterCombat() {
         SoundManager.stopBackgroundMusic();
         SoundManager.playBackgroundMusic("/music_map.mp3");
@@ -264,6 +297,11 @@ public class GameController {
         }
     }
 
+    /**
+     * Affiche l'écran de fin de jeu avec le résultat (victoire ou défaite).
+     *
+     * @param victoire true si victoire, false sinon.
+     */
     public void afficherEcranFin(boolean victoire) {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/EndGameView.fxml"));
@@ -294,6 +332,12 @@ public class GameController {
         }
     }
 
+
+    /**
+     * Relance une nouvelle partie en réinitialisant complètement l'état du jeu et l'affichage.
+     * Cette méthode remet les vies, le niveau et le multiplicateur à leurs valeurs initiales,
+     * reconstruit la carte et le bateau, puis remet à jour les éléments graphiques.
+     */
     public void rejouerPartie() {
             System.out.println("Nouvelle Partie créée");
 
@@ -309,7 +353,7 @@ public class GameController {
 
             // 3. Regénérer la map
             map = new GameMap(map.getDifficulte(), this);
-            afficherIles(map.getIles());
+            afficherIles();
 
             // 4. Recréer le bateau
             boat = new Boat(new Position(53, 346));
@@ -329,9 +373,24 @@ public class GameController {
             updateHearts(gameState.getLives());
     }
 
+
+    /**
+     * Indique si le bateau est amarré (docké) à une île spécifique.
+     * Délègue la vérification au contrôleur du bateau.
+     *
+     * @param island L'île à vérifier
+     * @return true si le bateau est amarré à cette île, false sinon
+     */
     public boolean isBoatDockedAtIsland(Island island) {
         return boatController.isBoatDockedAtIsland(island);
     }
+
+
+    /**
+     * Affiche un message toast temporaire.
+     *
+     * @param message Message à afficher.
+     */
 
     public void showToast(String message, BossView bossView) {
         toastLabel.setText(message);
@@ -353,7 +412,7 @@ public class GameController {
         toastLabel.setLayoutX(labelX - toastLabel.getWidth() / 2);
         toastLabel.setLayoutY(labelY - 30);
 
-        // Affiche pendant 3 secondes puis disparait sans animation
+        // Affiche pendant 3 secondes puis disparait
         PauseTransition pause = new PauseTransition(Duration.seconds(2));
         pause.setOnFinished(event -> {toastLabel.setOpacity(0.0);
             toastLabel.setVisible(false);
@@ -361,6 +420,13 @@ public class GameController {
         pause.play();
     }
 
+    /**
+     * Trouve les îles les plus proches d'une île donnée.
+     *
+     * @param centre Ile de référence.
+     * @param nombre Nombre maximum d'îles proches à retourner.
+     * @return Liste des îles les plus proches.
+     */
     private List<Island> trouverIlesLesPlusProches(Island centre, int nombre) {
         List<Island> ilesFiltrees = new ArrayList<>();
         Island end = map.getOnepiece();
