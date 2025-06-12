@@ -38,7 +38,7 @@ Ce projet est librement inspiré de One Piece, le manga culte d’Eiichiro Oda. 
 
 ## Structure du Git
 
-...
+```
   📦 Grand_line/
   ├── 📁 Code/
   │   ├── 📁 src/main/        # Contrôleurs JavaFX (logique de navigation, règles, résultats)
@@ -51,7 +51,7 @@ Ce projet est librement inspiré de One Piece, le manga culte d’Eiichiro Oda. 
   │            └── module-info.java                
   │       ├── 📁 ressources/             
   │        
-...
+```
 
 ##  Licence
 
