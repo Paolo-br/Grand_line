@@ -23,14 +23,13 @@ import javafx.stage.Stage;
 import java.io.IOException;
 import java.io.InputStream;
 
+// controller pour la fenetre du menu
+
 public class MenuController {
 
     public ImageView easyImageView, mediumImageView, hardImageView;
-
     @FXML
     private ImageView characterView, mapView; //Personnalisation
-    private CharacterModel model;
-
     @FXML
     private Button buttonPersonnalisation, buttonPlay, buttonRules;
     @FXML
@@ -46,7 +45,10 @@ public class MenuController {
 
     @FXML
     public void initialize() {
+
         SoundManager.playBackgroundMusic("/musiqueOnePiece.mp3");
+
+        //ToggleGroup ne marchant pas dans le fxml on le cree ici
         difficultyGroup = new ToggleGroup();
         easyRadio.setToggleGroup(difficultyGroup);
         mediumRadio.setToggleGroup(difficultyGroup);
@@ -55,7 +57,8 @@ public class MenuController {
         easyImageView.setImage(new Image(getClass().getResource("/persoEasyOmbre.png").toExternalForm()));
         mediumImageView.setImage(new Image(getClass().getResource("/persoMedium.png").toExternalForm()));
         hardImageView.setImage(new Image(getClass().getResource("/persoHard.png").toExternalForm()));
-        // Changement visuel à la sélection
+
+        // Changement visuel à la sélection de la diffuiculté
         easyRadio.selectedProperty().addListener((obs, wasSelected, isSelected) -> {
             easyImageView.setImage(new Image(getClass().getResource(isSelected ?
                     "/persoEasyOmbre.png" : "/persoEasy.png").toExternalForm()));
@@ -79,7 +82,10 @@ public class MenuController {
 
         buttonPlay.setOnAction(e -> {
             int selectedDifficulty = getSelectedDifficulty();
+
+            // on recupere la difficulté choisi seulement quand on appuie sur jouer
             GameManager.getInstance().setSelectedDifficulty(selectedDifficulty);
+
             SoundManager.playClickSound("/clic.mp3", 0.8);
 
             showLoadingOverlay(); // Affiche le loading
@@ -128,7 +134,7 @@ public class MenuController {
         CharacterSelection character = GameManager.getInstance().getSelectedCharacter();
         if (character != null) {
             String fileName = character.getCharacterImageName();
-            System.out.println(fileName);
+            //System.out.println(fileName);
             Image characterImage = new Image("/" + fileName);
             characterView.setImage(characterImage);
         }
@@ -175,4 +181,6 @@ public class MenuController {
             loadingOverlay.setVisible(false);
         }
     }
+
+
 }

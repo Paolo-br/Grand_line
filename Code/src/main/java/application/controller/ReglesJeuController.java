@@ -128,8 +128,10 @@ public class ReglesJeuController {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/main_menu.fxml"));
             Parent root = loader.load();
+            Scene scene = new Scene(root,1000,700);
             Stage stage = new Stage();
-            stage.setScene(new Scene(root));
+            stage.setTitle("Menu Principal");
+            stage.setScene(scene);
             stage.show();
 
             // Fermer la fenêtre actuelle

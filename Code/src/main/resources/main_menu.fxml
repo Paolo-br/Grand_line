@@ -8,7 +8,9 @@
 <StackPane
         xmlns:fx="http://javafx.com/fxml"
         fx:controller="application.controller.MenuController"
-
+        style="-fx-background-image: url('/fond_menu.png');
+             -fx-background-size: cover;
+             -fx-background-repeat: no-repeat;"
         prefWidth="800"
         prefHeight="800">
     <HBox fx:id="rootHBox"
@@ -29,19 +31,19 @@
                 <!-- FACILE -->
                 <VBox alignment="CENTER" spacing="5">
                     <ImageView fx:id="easyImageView" fitWidth="60" fitHeight="60" />
-                    <RadioButton fx:id="easyRadio" text="Facile" selected="true"/>
+                    <RadioButton fx:id="easyRadio" text="Facile" selected="true" textFill="#eaff00"/>
                 </VBox>
 
                 <!-- MOYEN -->
                 <VBox alignment="CENTER" spacing="5">
                     <ImageView fx:id="mediumImageView" fitWidth="60" fitHeight="60" />
-                    <RadioButton fx:id="mediumRadio" text="Moyen" />
+                    <RadioButton fx:id="mediumRadio" text="Moyen" textFill="#eaff00"/>
                 </VBox>
 
                 <!-- DIFFICILE -->
                 <VBox alignment="CENTER" spacing="5">
                     <ImageView fx:id="hardImageView" fitWidth="60" fitHeight="60" />
-                    <RadioButton fx:id="hardRadio" text="Difficile" />
+                    <RadioButton fx:id="hardRadio" text="Difficile" textFill="#eaff00"/>
                 </VBox>
             </HBox>
 

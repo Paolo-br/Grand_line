@@ -6,6 +6,7 @@
 <?import javafx.geometry.*?>
 
 <?import javafx.scene.effect.DropShadow?>
+<?import javafx.scene.text.Font?>
 <VBox spacing="20"
       alignment="CENTER"
       xmlns:fx="http://javafx.com/fxml"
@@ -33,7 +34,14 @@
         </Background>
     </background>
 
-    <Label text="Choisissez une carte" style="-fx-font-size: 24px;" />
+    <Label text="Choisissez une mer" textFill="#eaff00">
+        <font>
+            <Font name="System Bold Italic" size="30.0" />
+        </font>
+        <effect>
+            <DropShadow color="black" radius="2.0" offsetX="1.0" offsetY="1.0"/>
+        </effect>
+    </Label>
     <Button fx:id="randomMapButton" text="Aléatoire" prefWidth="150"/>
 
     <HBox spacing="20" alignment="CENTER">

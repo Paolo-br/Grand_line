@@ -112,7 +112,7 @@ public class GameController {
     public void initialize() {
 
         int mapImageName = GameManager.getInstance().getSelectedMapIndex()+1;
-        System.out.println(mapImageName);
+        //System.out.println(mapImageName);
 
         // Création et application du fond de carte avec l'image correspondant à la sélection
         BackgroundImage backgroundImage = new BackgroundImage(
@@ -223,9 +223,10 @@ public class GameController {
         try {
             FXMLLoader loader = new FXMLLoader(MenuView.class.getResource("/main_menu.fxml")); // adapte le chemin
             Parent root = loader.load();
+            Scene scene = new Scene(root,1000,700);
             Stage stage = new Stage();
             stage.setTitle("Menu Principal");
-            stage.setScene(new Scene(root));
+            stage.setScene(scene);
             stage.show();
         } catch (IOException e) {
             e.printStackTrace();

@@ -1,6 +1,8 @@
 package application.model;
 
-import javafx.scene.image.Image;
+//permet de selectionner le personnage choisi
+// et donc de renvoyer le nom de l'image a afficher
+//
 
 public class CharacterSelection {
     private  int head;

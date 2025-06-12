@@ -1,17 +1,22 @@
 package application.model;
 
 public class GameManager {
+
+    // ce qui nous permet de tout lier
     private static final GameManager instance = new GameManager();
 
-    //0 pour luffy, 1 pour nami et 2 pour zorro
+    // 0 pour luffy, 1 pour nami et 2 pour zorro
     private static CharacterSelection selectedCharacter = new CharacterSelection(0,0,0);
 
-    //nos map sont appelé map1,map2 etc...
+    // nos map sont appelé map1,map2 etc...
     private int selectedMapIndex = 0;
-    private int selectedDifficulty = 1;
+
+    private int selectedDifficulty = 1; // de 1 a 3
 
 
     private GameManager() {}
+
+    // getters et setters :
 
     public static GameManager getInstance() {
         return instance;
@@ -28,6 +33,7 @@ public class GameManager {
     public int getSelectedMapIndex() {
         return selectedMapIndex;
     }
+
     public void setSelectedMapIndex(int selectedMapIndex) {
         this.selectedMapIndex = selectedMapIndex;
     }
@@ -35,9 +41,11 @@ public class GameManager {
     public String getSelectedMapImageName() {
         return "map" + (selectedMapIndex + 1) + ".png";
     }
+
     public void setSelectedDifficulty(int difficulty) {
         this.selectedDifficulty = difficulty;
     }
+
     public int getSelectedDifficulty() {
         return selectedDifficulty;
     }

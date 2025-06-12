@@ -3,9 +3,12 @@ package application.model;
 import javafx.scene.media.MediaPlayer;
 import javafx.scene.media.Media;
 
+// cette classe permet de mettre une musique d'ambiance et des sons pour les boutons
+
 public class SoundManager {
     private static MediaPlayer backgroundMusic;
 
+    // pour jouer une musique
     public static void playBackgroundMusic(String path) {
         stopBackgroundMusic();
         Media media = new Media(SoundManager.class.getResource(path).toExternalForm());
@@ -15,13 +18,12 @@ public class SoundManager {
         backgroundMusic.play();
     }
 
+    //pour stopper la musique
     public static void stopBackgroundMusic() {
         if (backgroundMusic != null) backgroundMusic.stop();
     }
 
-    public static void setVolume(double volume) {
-        if (backgroundMusic != null) backgroundMusic.setVolume(volume);
-    }
+    //pour faire un son
     public static void playClickSound(String path, double volume) {
         Media clickSound = new Media(SoundManager.class.getResource(path).toExternalForm());
         MediaPlayer clickPlayer = new MediaPlayer(clickSound);

@@ -4,6 +4,10 @@ import javafx.scene.image.Image;
 
 import java.util.Random;
 
+//systeme d'index pour passer d'une tete a une autre
+// les parties du corps sont stocké dans un tableau
+// et la fleche de droite augmente l'index de 1
+
 public class CharacterModel {
 
     private final String[] heads = {"headLuffy.png", "headNami.png", "headZorro.png"};
@@ -65,6 +69,8 @@ public class CharacterModel {
     public int getBodyIndex() { return bodyIndex; }
     public int getLegsIndex() { return legsIndex; }
 
+
+    // permet de choisir un indice aleatoire et donc une partie du corps aléatoire
     public void randomize() {
         Random rand = new Random();
         headIndex = rand.nextInt(heads.length);
