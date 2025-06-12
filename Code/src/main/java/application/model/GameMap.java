@@ -10,27 +10,67 @@ import javafx.scene.image.ImageView;
 import java.util.ArrayList;
 import java.util.List;
 
-public class  GameMap {
+/**
+ * Représente la carte du jeu, contenant les îles, les boss et leur affichage visuel.
+ *
+ * La carte est générée dynamiquement en fonction du niveau de difficulté.
+ * Elle crée des îles fixes (ex : Red Line) et génère aléatoirement d'autres îles avec des boss.
+ *
+ * Ressources utilisées :
+ * - JavaFX pour les vues (IslandView, BossView)
+ * - Génération pseudo-aléatoire d’îles
+ */
+public class GameMap {
+
+    /** Liste des îles générées sur la carte. */
     private final List<Island> iles = new ArrayList<>();
+
+    /** Niveau de difficulté du jeu (1 = facile, 2 = moyen, 3 = difficile). */
     private final int difficulte;
+
+    /** Liste des vues associées aux îles. */
     private final List<IslandView> islandViews = new ArrayList<>();
+
+    /** Liste des vues associées aux boss. */
     private final List<BossView> bossViews = new ArrayList<>();
+
+    /** Référence au contrôleur principal du jeu. */
     private final GameController gameController;
 
+    /**
+     * Constructeur de la carte de jeu.
+     *
+     * @param difficulte Niveau de difficulté (1, 2 ou 3).
+     * @param gameController Contrôleur du jeu utilisé pour connecter les éléments.
+     */
     public GameMap(int difficulte, GameController gameController) {
         this.difficulte = difficulte;
-        this.gameController = gameController;// à l'avenir on récupera la difficulté grâce au vue de Pablo
+        this.gameController = gameController; // À l'avenir, la difficulté pourra être récupérée via la vue
         genererCarte();
     }
 
+    /**
+     * Retourne la liste des îles de la carte.
+     *
+     * @return Liste des objets Island.
+     */
     public List<Island> getIles() {
         return iles;
     }
 
+    /**
+     * Retourne le niveau de difficulté actuel.
+     *
+     * @return Difficulté (1 à 3).
+     */
     public int getDifficulte() {
         return difficulte;
     }
 
+    /**
+     * Génère la carte avec les îles principales et celles dépendant de la difficulté.
+     * Ajoute également les vues et les boss associés.
+     */
     private void genererCarte() {
         Island redlineTop = new Island(new Position(400, 0), false,"gand_linetop",true,false,false,true);
         iles.add(redlineTop);
@@ -125,6 +165,16 @@ public class  GameMap {
         ajouterIlesDansZone(ilesARajouter, 50, 330, 30, 740, 1);
     }
 
+    /**
+     * Génère un certain nombre d’îles dans une zone définie, avec évitement de collisions.
+     *
+     * @param nbIles   Nombre d'îles à ajouter.
+     * @param xmin     Limite minimale X.
+     * @param xmax     Limite maximale X.
+     * @param ymin     Limite minimale Y.
+     * @param ymax     Limite maximale Y.
+     * @param numDebut Numéro de départ pour les noms/images.
+     */
     private void ajouterIlesDansZone(int nbIles, double xmin, double xmax, double ymin, double ymax, int numDebut) {
         int ajoutees = 0;
         int essais = 0;
@@ -170,6 +220,13 @@ public class  GameMap {
         }
     }
 
+    /**
+     * Vérifie si une position est trop proche d’une île déjà existante ou de la zone de départ.
+     *
+     * @param x Coordonnée X.
+     * @param y Coordonnée Y.
+     * @return true si la position est trop proche, false sinon.
+     */
     private boolean isTropProche(double x, double y) {
         boolean tropProche = false;
 
@@ -194,21 +251,35 @@ public class  GameMap {
         return tropProche;
     }
 
+    /**
+     * Retourne la liste des vues des îles.
+     *
+     * @return Liste des objets IslandView.
+     */
     public List<IslandView> getIslandViews() {
         return islandViews;
     }
 
+    /**
+     * Retourne la liste des vues des boss.
+     *
+     * @return Liste des objets BossView.
+     */
     public List<BossView> getBossViews() {
         return bossViews;
     }
 
-    public Island getOnepiece(){
-        for (Island end : iles){
-            if (end.isOnePiece()){
+    /**
+     * Récupère l'île contenant le One Piece (marquée comme telle).
+     *
+     * @return L'île contenant le One Piece, ou null si non trouvée.
+     */
+    public Island getOnepiece() {
+        for (Island end : iles) {
+            if (end.isOnePiece()) {
                 return end;
             }
         }
         return null;
     }
-
 }
